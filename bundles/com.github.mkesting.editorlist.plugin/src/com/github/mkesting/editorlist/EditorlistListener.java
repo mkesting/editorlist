@@ -28,14 +28,14 @@ public class EditorlistListener implements IPartListener, IPageListener, IProper
     @Override
     public void partActivated(final IWorkbenchPart part) {
         if (part instanceof IEditorPart) {
-            editorlistView.selectEditorInViewer((IEditorPart) part);
+            Display.getDefault().asyncExec(() -> editorlistView.selectEditorInViewer((IEditorPart) part));
         }
     }
 
     @Override
     public void partBroughtToTop(final IWorkbenchPart part) {
         if (part instanceof IEditorPart) {
-            editorlistView.selectEditorInViewer((IEditorPart) part);
+            Display.getDefault().asyncExec(() -> editorlistView.selectEditorInViewer((IEditorPart) part));
         }
     }
 
@@ -47,27 +47,27 @@ public class EditorlistListener implements IPartListener, IPageListener, IProper
     @Override
     public void partOpened(final IWorkbenchPart part) {
         if (part instanceof IEditorPart) {
-            editorlistView.addEditorToViewer((IEditorPart) part);
+            Display.getDefault().asyncExec(() -> editorlistView.addEditorToViewer((IEditorPart) part));
         } else if (part == editorlistView) {
-            editorlistView.refreshContents();
+            Display.getDefault().asyncExec(() -> editorlistView.refreshContents());
         }
     }
 
     @Override
     public void partClosed(final IWorkbenchPart part) {
         if (part instanceof IEditorPart) {
-            editorlistView.removeEditorFromViewer((IEditorPart) part);
+            Display.getDefault().asyncExec(() -> editorlistView.removeEditorFromViewer((IEditorPart) part));
         }
     }
 
     @Override
     public void pageOpened(final IWorkbenchPage page) {
-        editorlistView.refreshContents();
+        Display.getDefault().asyncExec(() -> editorlistView.refreshContents());
     }
 
     @Override
     public void pageActivated(final IWorkbenchPage page) {
-        editorlistView.refreshContents();
+        Display.getDefault().asyncExec(() -> editorlistView.refreshContents());
     }
 
     @Override
@@ -84,6 +84,6 @@ public class EditorlistListener implements IPartListener, IPageListener, IProper
 
     @Override
     public void selectionChanged(final SelectionChangedEvent event) {
-        editorlistView.activateSelectedEditor();
+        Display.getDefault().asyncExec(() -> editorlistView.activateSelectedEditor());
     }
 }
