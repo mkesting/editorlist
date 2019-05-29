@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/com.github.mkesting.editorlist_1.0.0.qualifier.jar" id="com.github.mkesting.editorlist" version="1.0.0.qualifier">
+      <category name="Editorlist"/>
+   </feature>
+   <category-def name="Editorlist" label="Editorlist"/>
+</site>
