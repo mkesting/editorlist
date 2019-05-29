@@ -14,6 +14,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -64,11 +65,19 @@ public class EditorlistView extends ViewPart {
     private void createToolbarActions() {
         final IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
 
-        toolbar.add(new EditorlistFilterAction(viewer, filter, Pattern.JAVA));
-        toolbar.add(new EditorlistFilterAction(viewer, filter, Pattern.CLASS));
-        toolbar.add(new EditorlistFilterAction(viewer, filter, Pattern.XML));
-        toolbar.add(new EditorlistFilterAction(viewer, filter, Pattern.PROPERTIES));
-        toolbar.add(new EditorlistFilterAction(viewer, filter, Pattern.OTHERS));
+        final EditorlistFilterAction[] allFilters = {
+                new EditorlistFilterAction(viewer, filter, Pattern.JAVA),
+                new EditorlistFilterAction(viewer, filter, Pattern.CLASS),
+                new EditorlistFilterAction(viewer, filter, Pattern.XML),
+                new EditorlistFilterAction(viewer, filter, Pattern.PROPERTIES),
+                new EditorlistFilterAction(viewer, filter, Pattern.OTHERS)
+        };
+
+        for (final EditorlistFilterAction editorlistFilterAction : allFilters) {
+            toolbar.add(editorlistFilterAction);
+        }
+        toolbar.add(new Separator());
+        toolbar.add(new EditorlistClearFilterAction(viewer, filter, allFilters));
     }
 
     private void createContextMenu() {

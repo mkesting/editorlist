@@ -37,11 +37,21 @@ public class EditorlistFilterAction extends Action {
     public void run() {
         EditorlistPlugin.getDefault().getDialogSettings().put("filter" + pattern, isChecked());
 
+        boolean filterChanged = false;
+
         if (isChecked()) {
-            filter.addPattern(pattern);
+            filterChanged = filter.addPattern(pattern);
         } else {
-            filter.removePattern(pattern);
+            filterChanged = filter.removePattern(pattern);
         }
-        viewer.refresh();
+
+        if (filterChanged) {
+            viewer.refresh();
+        }
+    }
+
+    public void uncheck() {
+        setChecked(false);
+        run();
     }
 }

@@ -48,12 +48,16 @@ public class EditorlistFilter extends ViewerFilter {
         }
     }
 
-    public void addPattern(final Pattern pattern) {
-        patterns.add(pattern);
+    public boolean addPattern(final Pattern pattern) {
+        return patterns.add(pattern);
     }
 
-    public void removePattern(final Pattern pattern) {
-        patterns.remove(pattern);
+    public boolean removePattern(final Pattern pattern) {
+        return patterns.remove(pattern);
+    }
+
+    public void clear() {
+        patterns.clear();
     }
 
     @Override
