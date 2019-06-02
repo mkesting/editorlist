@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>com.github.mkesting.editorlist</groupId>
 		<artifactId>com.github.mkesting.editorlist.configuration</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>./releng/com.github.mkesting.editorlist.configuration</relativePath>
 	</parent>
 
