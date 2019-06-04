@@ -21,7 +21,7 @@ function main() {
 }
 
 function deploy_updatesite() {
-  echo "--------------------------------------------------------------------------------"
+  echo "-------------------------------------------------------------------------------"
   echo "${BINTRAY_USER}"
   echo "${BINTRAY_API_KEY}"
   echo "${BINTRAY_OWNER}"
@@ -31,7 +31,7 @@ function deploy_updatesite() {
   echo "${BINTRAY_PUBLISH}"
   echo "${TARGET_FOLDER}"
   echo "${PATH_TO_LOCAL_P2_REPO}"
-  echo "--------------------------------------------------------------------------------"
+  echo "-------------------------------------------------------------------------------"
 
   if [ ! -z "$PATH_TO_LOCAL_P2_REPO" ]; then
     cd "$PATH_TO_LOCAL_P2_REPO"
@@ -67,7 +67,7 @@ function put_file() {
   echo "$CURL_CMD"
   eval "$CURL_CMD"
   echo ""
-  echo "--------------------------------------------------------------------------------"
+  echo "-------------------------------------------------------------------------------"
 }
 
 main "$@"
