@@ -1,5 +1,5 @@
 #!/bin/bash
-#Sample Usage: pushToBintray.sh username apikey owner repo package version publish(0/1) targetFolder pathToLocalP2Repo
+#Sample Usage: pushToBintray.sh username apikey owner repo package version publish(0/1) pathToLocalP2Repo
 
 BINTRAY_API=https://api.bintray.com/content
 BINTRAY_USER=$1
@@ -9,11 +9,10 @@ BINTRAY_REPO=$4
 BINTRAY_PACKAGE=$5
 BINTRAY_VERSION=$6
 BINTRAY_PUBLISH=$7
-TARGET_FOLDER=$8
-PATH_TO_LOCAL_P2_REPO=$9
+PATH_TO_LOCAL_P2_REPO=$8
 
 CURL_USER="-u ${BINTRAY_USER}:${BINTRAY_API_KEY}"
-CURL_BASEURL="${BINTRAY_API}/${BINTRAY_OWNER}/${BINTRAY_REPO}/${TARGET_FOLDER}"
+CURL_BASEURL="${BINTRAY_API}/${BINTRAY_OWNER}/${BINTRAY_REPO}/${BINTRAY_PACKAGE}/${BINTRAY_VERSION}"
 CURL_HEADER="-H \"X-Bintray-Package:${BINTRAY_PACKAGE}\" -H \"X-Bintray-Version:${BINTRAY_VERSION}\" -H \"X-Bintray-Publish:${BINTRAY_PUBLISH}\""
 
 function main() {
@@ -29,7 +28,6 @@ function deploy_updatesite() {
   echo "${BINTRAY_PACKAGE}"
   echo "${BINTRAY_VERSION}"
   echo "${BINTRAY_PUBLISH}"
-  echo "${TARGET_FOLDER}"
   echo "${PATH_TO_LOCAL_P2_REPO}"
   echo "-------------------------------------------------------------------------------"
 

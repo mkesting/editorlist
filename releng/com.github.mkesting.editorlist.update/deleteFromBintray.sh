@@ -1,16 +1,17 @@
 #!/bin/bash
-#Sample Usage: deleteFromBintray.sh username apikey owner repo targetFolder pathToLocalP2Repo
+#Sample Usage: deleteFromBintray.sh username apikey owner repo package version pathToLocalP2Repo
 
 BINTRAY_API=https://api.bintray.com/content
 BINTRAY_USER=$1
 BINTRAY_API_KEY=$2
 BINTRAY_OWNER=$3
 BINTRAY_REPO=$4
-TARGET_FOLDER=$5
-PATH_TO_LOCAL_P2_REPO=$6
+BINTRAY_PACKAGE=$5
+BINTRAY_VERSION=$6
+PATH_TO_LOCAL_P2_REPO=$7
 
 CURL_USER="-u ${BINTRAY_USER}:${BINTRAY_API_KEY}"
-CURL_BASEURL="${BINTRAY_API}/${BINTRAY_OWNER}/${BINTRAY_REPO}/${TARGET_FOLDER}"
+CURL_BASEURL="${BINTRAY_API}/${BINTRAY_OWNER}/${BINTRAY_REPO}/${BINTRAY_PACKAGE}/${BINTRAY_VERSION}"
 
 function main() {
   delete_updatesite
@@ -22,7 +23,8 @@ function delete_updatesite() {
   echo "${BINTRAY_API_KEY}"
   echo "${BINTRAY_OWNER}"
   echo "${BINTRAY_REPO}"
-  echo "${TARGET_FOLDER}"
+  echo "${BINTRAY_PACKAGE}"
+  echo "${BINTRAY_VERSION}"
   echo "${PATH_TO_LOCAL_P2_REPO}"
   echo "--------------------------------------------------------------------------------"
 
