@@ -27,16 +27,22 @@ import org.eclipse.ui.IEditorReference;
 public class EditorlistViewer implements ISelectionProvider {
 
     private TableViewer viewer;
-    private ViewerComparator viewerComparator;
-    private EditorlistContentProvider contentProvider;
+
+    private final ViewerFilter viewerFilter;
+    private final ViewerComparator viewerComparator;
+
+    private final EditorlistLabelProvider labelProvider;
+    private final EditorlistContentProvider contentProvider;
 
     public EditorlistViewer(final Composite parent, final int style, final ViewerFilter viewerFilter) {
+        this.viewerFilter = viewerFilter;
+        this.labelProvider = new EditorlistLabelProvider();
         this.contentProvider = new EditorlistContentProvider();
         this.viewerComparator = new ViewerComparator(Collator.getInstance());
 
         this.viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
         this.viewer.setContentProvider(contentProvider);
-        this.viewer.setLabelProvider(new EditorlistLabelProvider());
+        this.viewer.setLabelProvider(labelProvider);
         this.viewer.addFilter(viewerFilter);
         this.viewer.setComparator(viewerComparator);
     }
@@ -45,6 +51,15 @@ public class EditorlistViewer implements ISelectionProvider {
         if (viewer != null) {
             return Arrays.stream(viewer.getTable().getItems()).map(e -> (EditorlistElement) e.getData())
                     .collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    public List<EditorlistElement> getFilteredElements() {
+        if (viewer != null) {
+            return Arrays.stream(viewer.getTable().getItems()).map(e -> (EditorlistElement) e.getData())
+                    .filter(e -> viewerFilter.select(viewer, null, e)).collect(Collectors.toList());
         } else {
             return Collections.emptyList();
         }
@@ -104,6 +119,7 @@ public class EditorlistViewer implements ISelectionProvider {
         if (viewer != null) {
             viewer.getControl().dispose();
             viewer = null;
+            labelProvider.dispose();
         }
     }
 

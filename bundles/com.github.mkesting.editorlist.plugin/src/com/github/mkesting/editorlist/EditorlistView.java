@@ -95,6 +95,8 @@ public class EditorlistView extends ViewPart {
 
     private void fillContextMenu(final IMenuManager menu) {
         menu.add(new EditorlistCloseEditorAction(this));
+        menu.add(new Separator());
+        menu.add(new EditorlistCloseFilteredEditorsAction(this));
     }
 
     private void addEditorReference(final IEditorReference reference) {
@@ -118,7 +120,7 @@ public class EditorlistView extends ViewPart {
         }
 
         final IStructuredSelection selection = (IStructuredSelection) provider.getSelection();
-        if (selection.size() != 1) {
+        if (selection == null || selection.size() != 1) {
             return null;
         }
         return ((EditorlistElement) selection.getFirstElement()).getEditorReference();
@@ -130,6 +132,12 @@ public class EditorlistView extends ViewPart {
             removeEditorReference(reference);
         }
         return part;
+    }
+
+    private void closeEditors(final List<EditorlistElement> editorElements) {
+        editorElements.stream().map(EditorlistElement::getEditorReference)
+                .map(e -> Optional.ofNullable(getRestoredEditor(e))).filter(Optional::isPresent).map(Optional::get)
+                .forEach(editor -> getSite().getPage().closeEditor(editor, true));
     }
 
     public void addEditorToViewer(final IEditorPart editor) {
@@ -175,9 +183,11 @@ public class EditorlistView extends ViewPart {
         final StructuredSelection selection = (StructuredSelection) viewer.getSelection();
         final List<EditorlistElement> editorElements = (List<EditorlistElement>) selection.toList();
 
-        editorElements.stream().map(EditorlistElement::getEditorReference)
-                .map(e -> Optional.ofNullable(getRestoredEditor(e))).filter(Optional::isPresent).map(Optional::get)
-                .forEach(editor -> getSite().getPage().closeEditor(editor, true));
+        closeEditors(editorElements);
+    }
+
+    public void closeFilteredEditors() {
+        closeEditors(viewer.getFilteredElements());
     }
 
     public void refreshContents() {
