@@ -18,13 +18,13 @@ import org.eclipse.ui.IEditorReference;
 
 public class EditorlistLabelProvider extends LabelProvider {
 
-    private final Map<Long, Image> images = new HashMap<Long, Image>();
+    private final Map<String, Image> images = new HashMap<>();
 
     @Override
     public Image getImage(final Object element) {
         if (element instanceof EditorlistElement) {
             final Image titleImage = ((EditorlistElement) element).getEditorReference().getTitleImage();
-            return images.computeIfAbsent(titleImage.handle,
+            return images.computeIfAbsent(titleImage.toString(),
                     k -> new Image(Display.getCurrent(), titleImage, SWT.IMAGE_COPY));
         }
         return super.getImage(element);
