@@ -56,7 +56,7 @@ public class EditorlistListener implements IPartListener, IPageListener, IProper
     @Override
     public void partClosed(final IWorkbenchPart part) {
         if (part instanceof IEditorPart) {
-            Display.getDefault().asyncExec(() -> editorlistView.removeEditorFromViewer((IEditorPart) part));
+            editorlistView.removeEditorFromViewer((IEditorPart) part);
         }
     }
 
