@@ -78,6 +78,9 @@ public class EditorlistView extends ViewPart {
         }
         toolbar.add(new Separator());
         toolbar.add(new EditorlistClearFilterAction(viewer, filter, allFilters));
+        toolbar.add(new Separator());
+        toolbar.add(new EditorlistCloseEditorAction(this));
+        toolbar.add(new EditorlistCloseFilteredEditorsAction(this));
     }
 
     private void createContextMenu() {
