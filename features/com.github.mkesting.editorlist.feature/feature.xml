@@ -2,7 +2,7 @@
 <feature
       id="com.github.mkesting.editorlist"
       label="Editorlist"
-      version="1.0.0.qualifier"
+      version="1.0.1.qualifier"
       provider-name="Martin Kesting">
 
    <description>

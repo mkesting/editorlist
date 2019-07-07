@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Editorlist
 Bundle-SymbolicName: com.github.mkesting.editorlist.plugin;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.1.qualifier
 Bundle-Activator: com.github.mkesting.editorlist.EditorlistPlugin
 Bundle-Vendor: Martin Kesting
 Require-Bundle: org.eclipse.ui,
