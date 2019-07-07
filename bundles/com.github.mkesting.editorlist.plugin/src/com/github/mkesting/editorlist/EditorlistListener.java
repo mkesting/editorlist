@@ -9,7 +9,6 @@ package com.github.mkesting.editorlist;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener;
@@ -19,23 +18,25 @@ import org.eclipse.ui.IWorkbenchPart;
 
 public class EditorlistListener implements IPartListener, IPageListener, IPropertyListener, ISelectionChangedListener {
 
+    private final EditorlistJob editorlistJob;
     private final EditorlistView editorlistView;
 
     public EditorlistListener(final EditorlistView editorlistView) {
         this.editorlistView = editorlistView;
+        this.editorlistJob = new EditorlistJob(editorlistView);
     }
 
     @Override
     public void partActivated(final IWorkbenchPart part) {
         if (part instanceof IEditorPart) {
-            Display.getDefault().asyncExec(() -> editorlistView.selectEditorInViewer((IEditorPart) part));
+            editorlistJob.selectEditorInViewer((IEditorPart) part);
         }
     }
 
     @Override
     public void partBroughtToTop(final IWorkbenchPart part) {
         if (part instanceof IEditorPart) {
-            Display.getDefault().asyncExec(() -> editorlistView.selectEditorInViewer((IEditorPart) part));
+            editorlistJob.selectEditorInViewer((IEditorPart) part);
         }
     }
 
@@ -47,27 +48,27 @@ public class EditorlistListener implements IPartListener, IPageListener, IProper
     @Override
     public void partOpened(final IWorkbenchPart part) {
         if (part instanceof IEditorPart) {
-            Display.getDefault().asyncExec(() -> editorlistView.addEditorToViewer((IEditorPart) part));
+            editorlistJob.addEditorToViewer((IEditorPart) part);
         } else if (part == editorlistView) {
-            Display.getDefault().asyncExec(() -> editorlistView.refreshContents());
+            editorlistJob.refreshContents();
         }
     }
 
     @Override
     public void partClosed(final IWorkbenchPart part) {
         if (part instanceof IEditorPart) {
-            editorlistView.removeEditorFromViewer((IEditorPart) part);
+            editorlistJob.removeEditorFromViewer((IEditorPart) part);
         }
     }
 
     @Override
     public void pageOpened(final IWorkbenchPage page) {
-        Display.getDefault().asyncExec(() -> editorlistView.refreshContents());
+        editorlistJob.refreshContents();
     }
 
     @Override
     public void pageActivated(final IWorkbenchPage page) {
-        Display.getDefault().asyncExec(() -> editorlistView.refreshContents());
+        editorlistJob.refreshContents();
     }
 
     @Override
@@ -78,12 +79,12 @@ public class EditorlistListener implements IPartListener, IPageListener, IProper
     @Override
     public void propertyChanged(final Object source, final int propId) {
         if (source instanceof IEditorPart && propId == IWorkbenchPart.PROP_TITLE) {
-            Display.getDefault().asyncExec(() -> editorlistView.refreshLabel((IEditorPart) source));
+            editorlistJob.refreshLabel((IEditorPart) source);
         }
     }
 
     @Override
     public void selectionChanged(final SelectionChangedEvent event) {
-        Display.getDefault().asyncExec(() -> editorlistView.activateSelectedEditor());
+        editorlistJob.activateSelectedEditor();
     }
 }
