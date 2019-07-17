@@ -39,6 +39,7 @@ public class EditorlistJob extends UIJob {
 
     public void refreshLabel(final IEditorPart editor) {
         updateJobs.add(() -> editorlistView.refreshLabel(editor));
+        schedule();
     }
 
     public void refreshContents() {
